@@ -147,6 +147,19 @@ def voteRank(graph, N):
 
     return nx.voterank(G, N, max_iter=2000)
 
+def clustering(graph, N):
+    topN = [(-float("inf"), "null")] * N # initialize N seed nodes with -inf degree
+
+    G = nx.Graph()
+    for node in graph.keys():
+        for neighbor in graph[node]:
+            G.add_edge(node, neighbor)
+
+    cluster = nx.algorithms.cluster.clustering(G)
+    cluster = sorted(cluster)
+
+    return cluster[:10]
+
 def make_simulation(filename, N):
     """
     Run a simulation with 2 or more strategies for the given input graph
